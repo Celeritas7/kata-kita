@@ -3,16 +3,19 @@ import { greeting } from '../lib/time.js';
 import { band } from '../components/band.js';
 import { IC } from '../components/icons.js';
 import { proverbOfDay } from '../api/content.js';
+import { pron } from '../lib/pron.js';
 
 export default {
   async render(_params, state) {
     const [ms, en] = greeting();
     const p = await proverbOfDay(state.profile?.timezone);
+    const dev = p ? await pron(p.ms) : null;
     return html`${band({ title: ms, sub: `${en}.` })}
 <section class="sheet">
   ${p && html`<article class="peri">
     <div class="eyebrow">Peribahasa hari ini · Proverb of the day</div>
     <p class="ms">${p.ms}</p>
+    ${dev && html`<p class="dev" lang="hi">${dev}</p>`}
     <p class="lit">${p.literal_en}</p>
     <p class="use"><b>${p.key_word}</b> · ${p.use_when}</p>
     <span class="peri-mark" aria-hidden="true">ڤريبهاس</span>

@@ -3,6 +3,9 @@ import { getPref, setTheme } from '../lib/theme.js';
 import { band } from '../components/band.js';
 import { IC } from '../components/icons.js';
 import { saveTheme } from '../api/profile.js';
+import { getGuide, setGuide } from '../lib/guide.js';
+
+const GUIDES = [['off', 'Tiada', 'None'], ['dev', 'देवनागरी', 'Devanagari']];
 
 const THEMES = [
   ['system', 'Sistem', 'System'],
@@ -30,6 +33,13 @@ export default {
     </div>
   </div>
   <div class="panel">
+    <div class="eyebrow">Panduan sebutan · Pronunciation guide</div>
+    <div class="segctl" role="group" aria-label="Panduan sebutan · Pronunciation guide">
+      ${GUIDES.map(([v, label, en]) => html`<button type="button" data-guide="${v}" aria-pressed="${String(v === getGuide())}">${label}<small>${en}</small></button>`)}
+    </div>
+    <p class="muted">Shows how Malay sounds, written in Devanagari, under proverbs and cards.</p>
+  </div>
+  <div class="panel">
     <div class="eyebrow">Akaun · Account</div>
     <p><b>${who}</b></p>
     <p class="muted">${note}</p>
@@ -43,6 +53,12 @@ export default {
   mount(root) {
     const ac = new AbortController();
     root.addEventListener('click', e => {
+      const g = e.target.closest('[data-guide]');
+      if (g) {
+        setGuide(g.dataset.guide);
+        root.querySelectorAll('[data-guide]').forEach(x => x.setAttribute('aria-pressed', String(x === g)));
+        return;
+      }
       const b = e.target.closest('[data-theme-pref]');
       if (!b) return;
       saveTheme(setTheme(b.dataset.themePref));

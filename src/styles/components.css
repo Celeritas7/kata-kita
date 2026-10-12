@@ -36,6 +36,7 @@ a.panel:hover { border-color: var(--ink-3); }
 
 .peri { background: var(--sheet); border: 1.5px solid var(--line); border-radius: 18px; padding: 18px; position: relative; overflow: hidden; }
 .peri .ms { font-family: var(--display); font-weight: 700; font-size: 21px; line-height: 1.2; margin: 8px 0 6px; text-wrap: balance; }
+.peri .dev { font-family: var(--deva); font-size: 16px; font-weight: 600; line-height: 1.5; color: var(--gold); margin: -2px 0 6px; }
 .peri .lit { font-size: 13px; color: var(--ink-2); font-weight: 600; }
 .peri .use { font-size: 13px; margin-top: 8px; font-weight: 600; }
 .peri .use b { color: var(--pandan); }

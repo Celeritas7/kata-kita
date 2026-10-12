@@ -27,6 +27,7 @@
   --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
   --body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --jawi: 'Noto Naskh Arabic', 'Geeza Pro', serif;
+  --deva: 'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', sans-serif;
   --mono: ui-monospace, 'SF Mono', Menlo, monospace;
 
   --safe-top: env(safe-area-inset-top, 0px);
