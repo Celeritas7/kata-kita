@@ -1,0 +1,56 @@
+/* Palette from a Malaysian kitchen & loom: songket indigo, kunyit gold, pandan green, sambal red.
+   Light by default; dark via prefers-color-scheme unless [data-theme="light"], or forced with [data-theme="dark"]. */
+:root {
+  color-scheme: light;
+  --bg: #EFF2EC;
+  --sheet: #FAFBF8;
+  --card: #FFFFFF;
+  --ink: #1B2140;
+  --ink-2: #545B78;
+  --ink-3: #8B90A6;
+  --line: #DCE1D8;
+  --gold: #D9961A;
+  --gold-soft: #F6E7C4;
+  --pandan: #2E8B57;
+  --pandan-soft: #D8EEDF;
+  --sambal: #CF3E2C;
+  --sambal-soft: #F7DCD6;
+  --band: #1B2140;
+  --band-ink: #F4E2B5;
+  --soil: #8A5A3B;
+  --pot: #C46A43;
+  --leaf: #3C9A5F;
+  --dock: #1B2140;
+  --dock-ink: #FAFBF8;
+  --shadow: 0 18px 40px -22px rgba(27, 33, 64, .45);
+
+  --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --jawi: 'Noto Naskh Arabic', 'Geeza Pro', serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0F1226; --sheet: #161A33; --card: #1D2240;
+    --ink: #ECEEF6; --ink-2: #B3B8CF; --ink-3: #7C82A0; --line: #272C4A;
+    --gold: #F0B23A; --gold-soft: #3A3120; --pandan: #4FC07D; --pandan-soft: #183428; --sambal: #F0624F; --sambal-soft: #3D1E1E;
+    --band: #0A0C1C; --band-ink: #F0B23A; --soil: #6E4A33; --pot: #A85A39; --leaf: #4FB574;
+    --dock: #070915; --dock-ink: #ECEEF6;
+    --shadow: 0 18px 40px -20px rgba(0, 0, 0, .7);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0F1226; --sheet: #161A33; --card: #1D2240;
+  --ink: #ECEEF6; --ink-2: #B3B8CF; --ink-3: #7C82A0; --line: #272C4A;
+  --gold: #F0B23A; --gold-soft: #3A3120; --pandan: #4FC07D; --pandan-soft: #183428; --sambal: #F0624F; --sambal-soft: #3D1E1E;
+  --band: #0A0C1C; --band-ink: #F0B23A; --soil: #6E4A33; --pot: #A85A39; --leaf: #4FB574;
+  --dock: #070915; --dock-ink: #ECEEF6;
+  --shadow: 0 18px 40px -20px rgba(0, 0, 0, .7);
+}

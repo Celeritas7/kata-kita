@@ -1,0 +1,24 @@
+# Minimal local config; `supabase init` fills in the rest with defaults.
+project_id = "kata-kita"
+
+[api]
+port = 54321
+
+[db]
+port = 54322
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed/seed.sql"]
+
+[studio]
+port = 54323
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173", "http://127.0.0.1:5173"]
+# Phase 0: every visitor gets a guest session so content is readable through RLS.
+enable_anonymous_sign_ins = true
+
+[auth.email]
+enable_signup = true
