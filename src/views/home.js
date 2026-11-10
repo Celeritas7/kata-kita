@@ -20,6 +20,10 @@ export default {
     <p class="use"><b>${p.key_word}</b> · ${p.use_when}</p>
     <span class="peri-mark" aria-hidden="true">ڤريبهاس</span>
   </article>`}
+  <a class="panel panel-link" href="#/learn">
+    <span><b>Belajar · Study</b><span>Start a flashcard session</span></span>
+    ${raw(IC.next)}
+  </a>
   <a class="panel panel-link" href="#/check">
     <span><b>Pemeriksaan sistem</b><span>Phase 0 system check</span></span>
     ${raw(IC.next)}

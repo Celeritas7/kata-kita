@@ -49,7 +49,7 @@ insert into unit_steps (id, unit_id, kind, title_ms, title_en, sort) values
   (24, 6, 'cabaran', 'Cabaran', 'Checkpoint: 5 questions', 4)
 on conflict (id) do update set unit_id = excluded.unit_id, kind = excluded.kind, title_ms = excluded.title_ms, title_en = excluded.title_en, sort = excluded.sort;
 
--- words (20)
+-- words (30)
 insert into words (id, topic_id, unit_id, ms, en, syllables, jawi, example_ms, example_en, register, note, audio_path) values
   (1, 'salam', 1, 'selamat pagi', 'good morning', 'se·la·mat pa·gi', 'سلامت ڤاݢي', 'Selamat pagi, cikgu!', 'Good morning, teacher!', null, null, null),
   (2, 'salam', 1, 'apa khabar', 'how are you?', 'a·pa kha·bar', 'اڤ خبر', 'Apa khabar? — Khabar baik.', 'How are you? — I’m well.', null, null, null),
@@ -70,7 +70,17 @@ insert into words (id, topic_id, unit_id, ms, en, syllables, jawi, example_ms, e
   (17, 'wang', 2, 'membeli', 'to buy', 'mem·be·li', 'ممبلي', 'Saya mahu membeli buah.', 'I want to buy fruit.', null, null, null),
   (18, 'pasar', 6, 'jom', 'let’s go', 'jom', 'جوم', 'Jom pergi mamak!', 'Let’s go to the mamak!', 'informal', null, null),
   (19, 'pasar', 6, 'tak apa', 'never mind', 'tak a·pa', 'تق اڤ', 'Tak apa, lain kali.', 'No worries, next time.', 'informal', null, null),
-  (20, 'pasar', 6, 'alamak', 'oh no!', 'a·la·mak', 'الامق', 'Alamak, hujan!', 'Oh no, it’s raining!', 'slang', null, null)
+  (20, 'pasar', 6, 'alamak', 'oh no!', 'a·la·mak', 'الامق', 'Alamak, hujan!', 'Oh no, it’s raining!', 'slang', null, null),
+  (21, 'pasar', 6, 'catur', 'chess', 'ca·tur', null, 'Mari kita main catur.', 'Let’s play chess.', null, null, null),
+  (22, 'makan', 3, 'madu', 'honey', 'ma·du', null, 'Saya tambah sedikit madu.', 'I add a little honey.', null, null, null),
+  (23, 'wang', 2, 'kedai', 'shop', 'ke·dai', null, 'Kedai itu buka pukul sembilan.', 'That shop opens at nine.', null, null, null),
+  (24, 'jalan', 4, 'kapal', 'ship', 'ka·pal', null, 'Kapal itu sampai pagi tadi.', 'The ship arrived this morning.', null, null, null),
+  (25, 'pasar', 6, 'katil', 'bed', 'ka·til', null, 'Bilik ini ada dua katil.', 'This room has two beds.', null, null, null),
+  (26, 'salam', 1, 'contoh', 'example', 'con·toh', null, 'Boleh beri satu contoh?', 'Could you give an example?', null, null, null),
+  (27, 'wang', 2, 'percuma', 'free of charge', 'per·cu·ma', null, 'Masuk percuma hari ini.', 'Admission is free today.', null, null, null),
+  (28, 'jalan', 4, 'gajah', 'elephant', 'ga·jah', null, 'Kami nampak seekor gajah.', 'We saw an elephant.', null, null, null),
+  (29, 'salam', 1, 'muka', 'face', 'mu·ka', null, 'Saya basuh muka.', 'I wash my face.', null, null, null),
+  (30, 'pasar', 6, 'raja', 'king', 'ra·ja', null, 'Raja itu tinggal di istana.', 'The king lives in the palace.', null, null, null)
 on conflict (id) do update set topic_id = excluded.topic_id, unit_id = excluded.unit_id, ms = excluded.ms, en = excluded.en, syllables = excluded.syllables, jawi = excluded.jawi, example_ms = excluded.example_ms, example_en = excluded.example_en, register = excluded.register, note = excluded.note, audio_path = excluded.audio_path;
 
 -- word_parts (13)

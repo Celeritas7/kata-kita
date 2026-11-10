@@ -28,6 +28,16 @@ const WORDS = [
   { id: 18, t: 'pasar', ms: 'jom', en: 'let’s go', syl: 'jom', jawi: 'جوم', ex: 'Jom pergi mamak!', exEn: 'Let’s go to the mamak!', tag: 'informal' },
   { id: 19, t: 'pasar', ms: 'tak apa', en: 'never mind', syl: 'tak a·pa', jawi: 'تق اڤ', ex: 'Tak apa, lain kali.', exEn: 'No worries, next time.', tag: 'informal' },
   { id: 20, t: 'pasar', ms: 'alamak', en: 'oh no!', syl: 'a·la·mak', jawi: 'الامق', ex: 'Alamak, hujan!', exEn: 'Oh no, it’s raining!', tag: 'slang' },
+  { id: 21, t: 'pasar', ms: 'catur', en: 'chess', syl: 'ca·tur', ex: 'Mari kita main catur.', exEn: 'Let’s play chess.' },
+  { id: 22, t: 'makan', ms: 'madu', en: 'honey', syl: 'ma·du', ex: 'Saya tambah sedikit madu.', exEn: 'I add a little honey.' },
+  { id: 23, t: 'wang', ms: 'kedai', en: 'shop', syl: 'ke·dai', ex: 'Kedai itu buka pukul sembilan.', exEn: 'That shop opens at nine.' },
+  { id: 24, t: 'jalan', ms: 'kapal', en: 'ship', syl: 'ka·pal', ex: 'Kapal itu sampai pagi tadi.', exEn: 'The ship arrived this morning.' },
+  { id: 25, t: 'pasar', ms: 'katil', en: 'bed', syl: 'ka·til', ex: 'Bilik ini ada dua katil.', exEn: 'This room has two beds.' },
+  { id: 26, t: 'salam', ms: 'contoh', en: 'example', syl: 'con·toh', ex: 'Boleh beri satu contoh?', exEn: 'Could you give an example?' },
+  { id: 27, t: 'wang', ms: 'percuma', en: 'free of charge', syl: 'per·cu·ma', ex: 'Masuk percuma hari ini.', exEn: 'Admission is free today.' },
+  { id: 28, t: 'jalan', ms: 'gajah', en: 'elephant', syl: 'ga·jah', ex: 'Kami nampak seekor gajah.', exEn: 'We saw an elephant.' },
+  { id: 29, t: 'salam', ms: 'muka', en: 'face', syl: 'mu·ka', ex: 'Saya basuh muka.', exEn: 'I wash my face.' },
+  { id: 30, t: 'pasar', ms: 'raja', en: 'king', syl: 'ra·ja', ex: 'Raja itu tinggal di istana.', exEn: 'The king lives in the palace.' },
 ];
 
 const PERIBAHASA = [
