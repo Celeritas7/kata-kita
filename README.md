@@ -2,7 +2,15 @@
 
 Malaysian Malay for English speakers. A PWA built from plain ES modules, Vite and Supabase.
 
-## Phase 0: Foundations
+## Study and review
+
+- Open **Belajar** to practice Malay to English or English to Malay in sessions of up to ten cards. Ratings schedule the next review. Daily study starts with due words, then introduces new ones.
+- Open **Kebun** to search the word bank and see which words are due. The starter vocabulary contains 30 cards.
+- In **Profil**, set Sanskrit, Tamil, and Indonesian to **Familiar**, **Reference**, or **Off**. Indonesian defaults to Reference. Mark individual hint words you recognize to move them above other hints. The deck can also filter to words with enabled hints.
+- **Peta** links to topic decks and a mamak food-ordering role-play. **Bengkel** lets you try prefix, root, and suffix combinations. Audio uses a Malay voice when the device provides one.
+- Review progress and hint preferences are stored in the current browser. The existing Supabase connection can supply content when configured.
+
+## Local setup
 
 ```bash
 npm install

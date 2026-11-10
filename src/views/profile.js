@@ -4,6 +4,8 @@ import { band } from '../components/band.js';
 import { IC } from '../components/icons.js';
 import { saveTheme } from '../api/profile.js';
 import { getGuide, setGuide } from '../lib/guide.js';
+import { getHintModes, HINT_LANGUAGES, HINT_MODES, setHintMode } from '../lib/memory-hints.js';
+import { toast } from '../components/toast.js';
 
 const GUIDES = [['off', 'Tiada', 'None'], ['dev', 'देवनागरी', 'Devanagari']];
 
@@ -16,13 +18,14 @@ const THEMES = [
 function account(state) {
   if (state.mode === 'demo') return ['Mod demo · Demo mode', 'Add Supabase keys to .env.local to connect a real account.'];
   if (!state.session) return ['Tiada sesi · Not connected', state.authError || 'The anonymous session could not start.'];
-  if (state.session.user.is_anonymous) return ['Akaun tamu · Guest account', 'Progress is saved to a guest account on this device. Email, Apple and Google sign-in arrive in Phase 1.'];
+  if (state.session.user.is_anonymous) return ['Akaun tamu · Guest account', 'Your theme can sync to the guest profile. Flashcard reviews are stored in this browser.'];
   return [state.session.user.email, 'Signed in.'];
 }
 
 export default {
   render(_params, state) {
     const pref = getPref();
+    const hintModes = getHintModes();
     const [who, note] = account(state);
     return html`${band({ title: 'Profil & tetapan', sub: 'Profile & settings.', back: '#/' })}
 <section class="sheet">
@@ -40,6 +43,17 @@ export default {
     <p class="muted">Shows how Malay sounds, written in Devanagari, under proverbs and cards.</p>
   </div>
   <div class="panel">
+    <div class="eyebrow">Petunjuk ingatan · Memory hints</div>
+    <p class="muted">Choose Familiar for words you may already know. Reference keeps comparisons visible with lower priority.</p>
+    ${HINT_LANGUAGES.map(language => html`<label class="practice-field">${language.name}
+      <select data-hint-language="${language.id}">${HINT_MODES.map(([mode, label]) =>
+        mode === hintModes[language.id] ? html`<option value="${mode}" selected>${label}</option>`
+          : html`<option value="${mode}">${label}</option>`)}
+      </select>
+    </label>`)}
+    <p class="muted">Hint settings are stored on this device.</p>
+  </div>
+  <div class="panel">
     <div class="eyebrow">Akaun · Account</div>
     <p><b>${who}</b></p>
     <p class="muted">${note}</p>
@@ -52,6 +66,16 @@ export default {
   },
   mount(root) {
     const ac = new AbortController();
+    root.addEventListener('change', event => {
+      const input = event.target.closest('[data-hint-language]');
+      if (!input) return;
+      const id = input.dataset.hintLanguage;
+      try { setHintMode(id, input.value); }
+      catch {
+        input.value = getHintModes()[id];
+        toast('Could not save this setting on this device.');
+      }
+    }, { signal: ac.signal });
     root.addEventListener('click', e => {
       const g = e.target.closest('[data-guide]');
       if (g) {

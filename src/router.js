@@ -7,6 +7,7 @@ const ROUTES = [
   { path: '/learn', tab: 'learn', load: () => import('./views/learn.js') },
   { path: '/garden', tab: 'garden', load: () => import('./views/garden.js') },
   { path: '/map', tab: 'map', load: () => import('./views/map.js') },
+  { path: '/roleplay', tab: 'map', load: () => import('./views/roleplay.js') },
   { path: '/workshop', tab: 'workshop', load: () => import('./views/workshop.js') },
   { path: '/profile', load: () => import('./views/profile.js') },
   { path: '/check', load: () => import('./views/check.js') },
@@ -35,7 +36,7 @@ let first = true;
 
 async function navigate() {
   const path = currentPath();
-  const { route, params } = match(path);
+  const { route, params } = match(path.split('?')[0]);
   const id = ++seq;
   let out;
   let mod;

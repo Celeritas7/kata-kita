@@ -133,3 +133,39 @@ a.panel:hover { border-color: var(--ink-3); }
 @keyframes kk-fade { from { opacity: 0; } }
 @keyframes kk-rise { from { transform: translateY(100%); } }
 @keyframes kk-pop { from { transform: scale(.96); opacity: 0; } }
+
+/* Study, word garden and course practice */
+.practice-field { display: grid; gap: 5px; margin-top: 12px; font-weight: 700; }
+.practice-field select, .practice-field input {
+  width: 100%; min-width: 0; min-height: 44px; padding: 8px 10px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); font: inherit;
+}
+.practice-action {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 7px 11px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink);
+  font-weight: 750; text-decoration: none;
+}
+.practice-action.primary { margin-top: 12px; background: var(--pandan-soft); border-color: var(--pandan); }
+.practice-action:disabled { opacity: .55; cursor: default; }
+.practice-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.practice-word { margin: 16px 0; display: grid; justify-items: start; gap: 8px; }
+.practice-word .h2 { font-size: clamp(25px, 8vw, 36px); overflow-wrap: anywhere; }
+.practice-answer { padding: 12px; margin: 10px 0; border-radius: 10px; background: var(--pandan-soft); }
+.practice-answer > * + *, .word-bank summary + p { margin-top: 7px; }
+.practice-ratings { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; margin-top: 7px; }
+.memory-hints { margin: 10px 0; }
+.memory-hints summary, .word-bank summary { cursor: pointer; padding-block: 8px; }
+.memory-list { display: grid; gap: 7px; }
+.memory-list li { padding: 8px 10px; border-inline-start: 3px solid var(--gold); background: var(--gold-soft); border-radius: 6px; }
+.memory-list .eyebrow { color: var(--ink-2); }
+.word-bank { display: grid; gap: 7px; }
+.word-bank small { display: block; color: var(--ink-2); }
+.practice-replies { display: grid; gap: 8px; margin-block: 12px; }
+.practice-feedback { margin-block: 10px; }
+.course-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+.course-actions svg { width: 16px; height: 16px; margin-inline-start: 4px; }
+.practice-action[hidden] { display: none; }
+.word-bank [hidden] { display: none; }
+.known-hint { display: flex; align-items: center; gap: 8px; min-height: 36px; cursor: pointer; }
+.known-hint input { width: 17px; height: 17px; accent-color: var(--pandan); }
+.course-stop .stop { padding: 0; border: 0; }

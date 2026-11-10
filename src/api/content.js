@@ -61,3 +61,50 @@ export async function contentWriteBlocked() {
   if (data?.[0]) await db.from('proverbs').delete().eq('id', data[0].id);
   return false;
 }
+
+export async function listVocabulary() {
+  if (!db) {
+    const { words, topics } = await sample();
+    return { words, topics };
+  }
+  const topics = unwrap(await db.from('topics').select('id, name_ms, name_en').order('sort'));
+  const words = [];
+  const pageSize = 500;
+  for (let offset = 0; ; offset += pageSize) {
+    const page = unwrap(await db.from('words')
+      .select('id, topic_id, unit_id, ms, en, syllables, jawi, example_ms, example_en, register, note')
+      .order('id').range(offset, offset + pageSize - 1));
+    words.push(...page);
+    if (page.length < pageSize) break;
+  }
+  return { words, topics };
+}
+
+export async function listAffixes() {
+  if (!db) {
+    const { affix_roots: roots, affix_forms: forms } = await sample();
+    return { roots, forms };
+  }
+  const [roots, forms] = await Promise.all([
+    db.from('affix_roots').select('root, en').order('sort'),
+    db.from('affix_forms').select('prefix, root, suffix, parts, meaning_en, rule_en').order('id'),
+  ]);
+  return { roots: unwrap(roots), forms: unwrap(forms) };
+}
+
+export async function listRoleplay(unitId) {
+  let turns;
+  let replies;
+  if (db) {
+    turns = unwrap(await db.from('roleplay_turns').select('id, speaker, line_ms, line_en')
+      .eq('unit_id', unitId).order('sort'));
+    if (!turns.length) return [];
+    replies = unwrap(await db.from('roleplay_replies').select('id, turn_id, text_ms, is_correct, feedback_en')
+      .in('turn_id', turns.map(turn => turn.id)).order('id'));
+  } else {
+    const sampleRows = await sample();
+    turns = sampleRows.roleplay_turns.filter(turn => turn.unit_id === unitId);
+    replies = sampleRows.roleplay_replies;
+  }
+  return turns.map(turn => ({ ...turn, replies: replies.filter(reply => reply.turn_id === turn.id) }));
+}
