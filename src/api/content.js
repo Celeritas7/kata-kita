@@ -108,3 +108,18 @@ export async function listRoleplay(unitId) {
   }
   return turns.map(turn => ({ ...turn, replies: replies.filter(reply => reply.turn_id === turn.id) }));
 }
+
+export async function listExerciseStops() {
+  if (!db) return (await sample()).questions;
+  return unwrap(await db.from('questions').select('unit_id, step'));
+}
+
+export async function listExerciseQuestions(unitId, step) {
+  if (!db) {
+    const { questions } = await sample();
+    return questions.filter(question => question.unit_id === unitId && question.step === step);
+  }
+  return unwrap(await db.from('questions')
+    .select('id, kind, prompt_ms, prompt_en, audio_text, options, answer, alt_answers, affix_root')
+    .eq('unit_id', unitId).eq('step', step).order('sort').order('id'));
+}
