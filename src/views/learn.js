@@ -5,7 +5,7 @@ import { toast } from '../components/toast.js';
 import { html } from '../lib/html.js';
 import { hintsFor } from '../lib/memory-hints.js';
 import { pron } from '../lib/pron.js';
-import { speakMalay } from '../lib/speak.js';
+import { preloadMalayAudio, speakMalay, stopMalayAudio } from '../lib/speak.js';
 import { loadReviews, RATINGS, recordReview, studyQueue } from '../srs/local-review.js';
 
 const MODES = [
@@ -26,6 +26,7 @@ export default {
   mount(root) {
     const host = root.querySelector('#study-session');
     const events = new AbortController();
+    preloadMalayAudio();
     const params = new URLSearchParams(location.hash.split('?')[1]);
     let topic = params.get('topic') ?? 'all';
     let mode = params.get('mode') === 'due' ? 'due' : 'daily';
@@ -46,6 +47,7 @@ export default {
     }
 
     function setup(message) {
+      stopMalayAudio();
       const reviews = loadReviews();
       const selected = selectedWords();
       const due = studyQueue(selected, reviews, 'due').length;
@@ -124,7 +126,7 @@ export default {
       setup();
       host.querySelector(`[name="${name}"]`)?.focus();
     }, { signal: events.signal });
-    host.addEventListener('click', event => {
+    host.addEventListener('click', async event => {
       const button = event.target.closest('[data-study], [data-rating]');
       if (!button) return;
       const { study, rating } = button.dataset;
@@ -138,13 +140,14 @@ export default {
         revealed = true;
         card(true);
       } else if (study === 'speak') {
-        if (!speakMalay(queue[index].ms)) toast('This device has no Malay voice available.');
+        if (!await speakMalay(queue[index].ms)) toast('Malay audio is unavailable.');
       } else if (study === 'end') {
         setup(`${index} cards rated.`);
         host.querySelector('select').focus();
       } else if (rating && revealed) {
         try { recordReview(queue[index], rating); }
         catch { toast('Could not save this review on this device.'); return; }
+        stopMalayAudio();
         index++;
         revealed = false;
         if (index < queue.length) card(true);
@@ -163,6 +166,6 @@ export default {
     }).catch(() => {
       if (!events.signal.aborted) host.textContent = 'Could not load vocabulary. Check your connection and reopen this tab.';
     });
-    return () => { events.abort(); window.speechSynthesis?.cancel(); };
+    return () => { events.abort(); stopMalayAudio(); };
   },
 };

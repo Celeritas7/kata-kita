@@ -7,6 +7,7 @@ const ROUTES = [
   { path: '/learn', tab: 'learn', load: () => import('./views/learn.js') },
   { path: '/garden', tab: 'garden', load: () => import('./views/garden.js') },
   { path: '/map', tab: 'map', load: () => import('./views/map.js') },
+  { path: '/exercise/:unit/:step', tab: 'map', load: () => import('./views/exercise.js') },
   { path: '/roleplay', tab: 'map', load: () => import('./views/roleplay.js') },
   { path: '/workshop', tab: 'workshop', load: () => import('./views/workshop.js') },
   { path: '/profile', load: () => import('./views/profile.js') },
@@ -23,7 +24,11 @@ const compiled = ROUTES.map(r => {
 function match(path) {
   for (const r of compiled) {
     const m = path.match(r.re);
-    if (m) return { route: r, params: Object.fromEntries(r.keys.map((k, i) => [k, decodeURIComponent(m[i + 1])])) };
+    if (!m) continue;
+    try {
+      const params = Object.fromEntries(r.keys.map((key, i) => [key, decodeURIComponent(m[i + 1])]));
+      return { route: r, params };
+    } catch { break; }
   }
   return { route: NOT_FOUND, params: {} };
 }
