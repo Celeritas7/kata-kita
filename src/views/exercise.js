@@ -3,7 +3,7 @@ import { band } from '../components/band.js';
 import { toast } from '../components/toast.js';
 import { answerLabel, exerciseChoices, EXERCISES, matchesAnswer, saveExerciseResult } from '../lib/course-exercises.js';
 import { html } from '../lib/html.js';
-import { speakMalay } from '../lib/speak.js';
+import { preloadMalayAudio, speakMalay, stopMalayAudio } from '../lib/speak.js';
 
 export default {
   async render({ unit, step }) {
@@ -33,6 +33,7 @@ export default {
     const content = section.querySelector('[data-exercise-content]');
     const questions = [...section.querySelector('template').content.children];
     const events = new AbortController();
+    preloadMalayAudio();
     let attempt = questions;
     let index = 0;
     let correct = 0;
@@ -43,7 +44,7 @@ export default {
     let retrying = false;
 
     function showQuestion(focus) {
-      window.speechSynthesis?.cancel();
+      stopMalayAudio();
       assisted = false;
       answered = false;
       const question = attempt[index].cloneNode(true);
@@ -60,7 +61,7 @@ export default {
     }
 
     function finish() {
-      window.speechSynthesis?.cancel();
+      stopMalayAudio();
       let saved = false;
       if (!retrying) {
         try {
@@ -114,12 +115,12 @@ export default {
       submit(String(data.get('answer') ?? ''));
     }, { signal: events.signal });
 
-    content.addEventListener('click', event => {
+    content.addEventListener('click', async event => {
       const action = event.target.closest('[data-exercise]')?.dataset.exercise;
       if (!action) return;
       const transcript = content.querySelector('[data-transcript]');
       if (action === 'audio') {
-        if (!speakMalay(transcript.textContent)) toast('This device has no Malay voice. You can reveal the transcript.');
+        if (!await speakMalay(transcript.textContent)) toast('Malay audio is unavailable. You can reveal the transcript.');
       } else if (action === 'transcript') {
         if (!answered && !assisted) { transcripts++; assisted = true; }
         transcript.hidden = false;
@@ -139,7 +140,7 @@ export default {
     }, { signal: events.signal });
 
     showQuestion(false);
-    return () => { events.abort(); window.speechSynthesis?.cancel(); };
+    return () => { events.abort(); stopMalayAudio(); };
   },
 };
 

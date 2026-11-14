@@ -2,7 +2,7 @@ import { listRoleplay } from '../api/content.js';
 import { band } from '../components/band.js';
 import { toast } from '../components/toast.js';
 import { html } from '../lib/html.js';
-import { speakMalay } from '../lib/speak.js';
+import { preloadMalayAudio, speakMalay, stopMalayAudio } from '../lib/speak.js';
 
 export default {
   render() {
@@ -14,11 +14,13 @@ export default {
   mount(root) {
     const host = root.querySelector('#roleplay');
     const events = new AbortController();
+    preloadMalayAudio();
     let turns = [];
     let index = 0;
     let completed = false;
 
     function prompt(focus) {
+      stopMalayAudio();
       const turn = turns[index];
       host.innerHTML = String(turn ? html`
         <p class="eyebrow">${turn.speaker} · Turn ${index + 1} / ${turns.length}</p>
@@ -34,12 +36,12 @@ export default {
       if (focus) host.querySelector('h2').focus();
     }
 
-    host.addEventListener('click', event => {
+    host.addEventListener('click', async event => {
       const button = event.target.closest('[data-roleplay], [data-reply]');
       if (!button) return;
       const action = button.dataset.roleplay;
       if (action === 'speak') {
-        if (!speakMalay(turns[index].line_ms)) toast('This device has no Malay voice available.');
+        if (!await speakMalay(turns[index].line_ms)) toast('Malay audio is unavailable.');
       } else if (action === 'next' && completed) {
         index++;
         completed = false;
@@ -68,6 +70,6 @@ export default {
     }).catch(() => {
       if (!events.signal.aborted) host.textContent = 'Could not load the conversation. Check your connection and reopen this page.';
     });
-    return () => { events.abort(); window.speechSynthesis?.cancel(); };
+    return () => { events.abort(); stopMalayAudio(); };
   },
 };
